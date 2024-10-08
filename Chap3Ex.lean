@@ -39,31 +39,61 @@ theorem Exercise_3_2_2b (P Q : Prop)
 theorem Exercise_3_3_1
     (U : Type) (P Q : Pred U) (h1 : ∃ (x : U), P x → Q x) :
     (∀ (x : U), P x) → ∃ (x : U), Q x := by
-  sorry
+  obtain (a : U) (h2 : P a → Q a) from h1
+  assume h3 : ∀ (x : U), P x
+  have h4 : P a := h3 a
+  have h5 : Q a := h2 h4
+  apply Exists.intro a
+  show Q a from h5
   done
 
 -- 2.
 theorem Exercise_3_3_8 (U : Type) (F : Set (Set U)) (A : Set U)
     (h1 : A ∈ F) : A ⊆ ⋃₀ F := by
-  sorry
+  define
+  fix a : U
+  assume h2 : a ∈ A
+  define
+  apply Exists.intro A
+  show A ∈ F ∧ a ∈ A from And.intro h1 h2
   done
 
 -- 3.
 theorem Exercise_3_3_9 (U : Type) (F : Set (Set U)) (A : Set U)
     (h1 : A ∈ F) : ⋂₀ F ⊆ A := by
-  sorry
+  define
+  fix a : U
+  assume h2 : a ∈ ⋂₀ F
+  define at h2
+  show a ∈ A := h2 A h1
   done
 
 -- 4.
 theorem Exercise_3_3_10 (U : Type) (B : Set U) (F : Set (Set U))
     (h1 : ∀ (A : Set U), A ∈ F → B ⊆ A) : B ⊆ ⋂₀ F := by
-  sorry
+  define
+  fix a : U
+  assume h2 : a ∈ B
+  define
+  fix A : Set U
+  assume h3 : A ∈ F
+  have h4 : B ⊆ A := h1 A h3
+  define at h4
+  show a ∈ A := h4 h2
   done
 
 -- 5.
 theorem Exercise_3_3_13 (U : Type)
     (F G : Set (Set U)) : F ⊆ G → ⋂₀ G ⊆ ⋂₀ F := by
-  sorry
+  assume h1 : F ⊆ G
+  define; define at h1
+  fix a : U
+  assume h2 : a ∈ ⋂₀ G
+  define
+  fix A : Set U
+  assume h3 : A ∈ F
+  define at h2
+  show a ∈ A := h2 A (h1 h3)
   done
 
 /- Section 3.4 -/
